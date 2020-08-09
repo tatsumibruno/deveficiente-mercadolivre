@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.commons.exceptions;
+package deveficiente.mercadolivre.comum.exceptions;
 
 import com.google.common.collect.Lists;
 import lombok.Getter;

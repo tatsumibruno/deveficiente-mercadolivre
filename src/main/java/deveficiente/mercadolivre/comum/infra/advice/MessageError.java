@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.commons.infra.advice;
+package deveficiente.mercadolivre.comum.infra.advice;
 
 import lombok.Data;
 

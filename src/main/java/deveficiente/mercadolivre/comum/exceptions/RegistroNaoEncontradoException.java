@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.commons.exceptions;
+package deveficiente.mercadolivre.comum.exceptions;
 
 public class RegistroNaoEncontradoException extends RuntimeException {
 }

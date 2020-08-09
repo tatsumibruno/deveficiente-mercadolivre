@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.commons.utils;
+package deveficiente.mercadolivre.comum.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

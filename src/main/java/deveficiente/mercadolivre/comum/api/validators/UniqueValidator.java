@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.commons.api.validators;
+package deveficiente.mercadolivre.comum.api.validators;
 
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
-package deveficiente.mercadolivre.commons.infra.advice;
+package deveficiente.mercadolivre.comum.infra.advice;
 
-import deveficiente.mercadolivre.commons.exceptions.BusinessException;
-import deveficiente.mercadolivre.commons.exceptions.RegistroNaoEncontradoException;
+import deveficiente.mercadolivre.comum.exceptions.BusinessException;
+import deveficiente.mercadolivre.comum.exceptions.RegistroNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
