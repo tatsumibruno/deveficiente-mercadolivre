@@ -1,12 +1,13 @@
 package deveficiente.mercadolivre.usuario.dominio;
 
-import deveficiente.mercadolivre.usuario.infra.DadoCriptografadoConverter;
+import deveficiente.mercadolivre.comum.infra.converters.DadoCriptografadoConverter;
 import lombok.*;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -23,6 +24,7 @@ public class Usuario {
     @GeneratedValue
     private UUID id;
     @NotNull
+    @Email
     @NotEmpty
     private String login;
     @NotNull

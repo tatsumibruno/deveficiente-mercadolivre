@@ -1,4 +1,4 @@
-package deveficiente.mercadolivre.usuario.infra;
+package deveficiente.mercadolivre.comum.infra.converters;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

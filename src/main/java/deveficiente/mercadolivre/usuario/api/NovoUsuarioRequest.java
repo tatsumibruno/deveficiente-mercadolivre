@@ -3,7 +3,7 @@ package deveficiente.mercadolivre.usuario.api;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NovoUsuarioRequest {
     @NotNull
-    @NotEmpty
+    @Email
     private String login;
     @NotNull
     @Size(min = 6, max = 50)
