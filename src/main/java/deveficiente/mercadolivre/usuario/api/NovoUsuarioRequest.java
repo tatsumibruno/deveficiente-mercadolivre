@@ -1,5 +1,6 @@
 package deveficiente.mercadolivre.usuario.api;
 
+import deveficiente.mercadolivre.comum.api.validators.Unique;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.*;
 
@@ -14,8 +15,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "login")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NovoUsuarioRequest {
-    @NotNull
+
     @Email
+    @NotNull
+    @Unique(field = "login", targetClass = Usuario.class, message = "{NovoUsuarioRequest.Unique.message}")
     private String login;
     @NotNull
     @Size(min = 6, max = 50)

@@ -3,10 +3,7 @@ package deveficiente.mercadolivre.usuario.dominio;
 import deveficiente.mercadolivre.comum.infra.converters.DadoCriptografadoConverter;
 import lombok.*;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,10 +11,11 @@ import javax.validation.constraints.Past;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
 @ToString(exclude = "senha")
 @EqualsAndHashCode(of = "login")
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Entity
+@Table(name = "usuario", uniqueConstraints = @UniqueConstraint(name = "usuario_login_un", columnNames = "login"))
 public class Usuario {
 
     @Id
