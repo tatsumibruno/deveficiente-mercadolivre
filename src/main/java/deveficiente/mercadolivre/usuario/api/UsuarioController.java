@@ -2,7 +2,7 @@ package deveficiente.mercadolivre.usuario.api;
 
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import deveficiente.mercadolivre.usuario.dominio.UsuarioRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequestMapping("/api/v1/usuarios")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
