@@ -21,3 +21,5 @@ server:
   port: 8081
   compression:
     enabled: true
+jwt:
+  secret: mercadolivre
