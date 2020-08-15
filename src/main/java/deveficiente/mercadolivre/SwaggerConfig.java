@@ -2,6 +2,7 @@ package deveficiente.mercadolivre;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -25,6 +26,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("deveficiente.mercadolivre"))
                 .paths(PathSelectors.any())
                 .build()
+                .ignoredParameterTypes(UserDetails.class)
                 .securitySchemes(List.of(new ApiKey("JWT", "Authorization", "header")))
                 .securityContexts(List.of(securityContext()))
                 .apiInfo(apiInfo());
