@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody @Valid NovoUsuarioRequest novoUsuario) {
-        Usuario usuario = novoUsuario.entidade();
+        Usuario usuario = novoUsuario.modelo();
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(novoUsuario.getLogin());
     }

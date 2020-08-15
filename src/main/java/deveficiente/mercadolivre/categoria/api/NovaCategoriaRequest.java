@@ -19,7 +19,7 @@ public class NovaCategoriaRequest {
     private String nome;
     private UUID idCategoriaPai;
 
-    public Categoria entidade(CategoriaRepository categoriaRepository) {
+    public Categoria modelo(CategoriaRepository categoriaRepository) {
         Categoria categoriaPai = Optional.ofNullable(idCategoriaPai)
                 .map(idCategoria -> categoriaRepository.findById(idCategoria)
                         .orElseThrow(() -> new IllegalArgumentException("categoria.pai.nao.encontrada")))

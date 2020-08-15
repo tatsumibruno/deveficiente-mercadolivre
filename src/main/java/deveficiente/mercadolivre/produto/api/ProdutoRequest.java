@@ -2,8 +2,6 @@ package deveficiente.mercadolivre.produto.api;
 
 import deveficiente.mercadolivre.categoria.dominio.Categoria;
 import deveficiente.mercadolivre.categoria.dominio.CategoriaRepository;
-import deveficiente.mercadolivre.produto.dominio.CaracteristicaProduto;
-import deveficiente.mercadolivre.produto.dominio.FotoProduto;
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,11 +15,12 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class NovoProdutoRequest {
+public class ProdutoRequest {
     @NotEmpty
     private String nome;
     @NotNull
@@ -32,25 +31,21 @@ public class NovoProdutoRequest {
     private int quantidadeDisponivel;
     @NotNull
     @Size(min = 3, max = 50)
-    private List<CaracteristicaProduto> caracteristicas;
-    @NotNull
-    @Size(min = 1, max = 10)
-    private List<FotoProduto> fotos;
+    private List<CaracteristicaProdutoRequest> caracteristicas;
     @NotEmpty
     @Size(min = 1, max = 1_000)
     private String descricao;
     @NotNull
     private UUID idCategoria;
 
-    public Produto entidade(CategoriaRepository categoriaRepository) {
+    public Produto modelo(CategoriaRepository categoriaRepository) {
         Categoria categoria = categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new IllegalArgumentException("categoria.nao.encontrada"));
         return Produto.builder()
                 .nome(nome)
                 .valor(valor)
                 .quantidadeDisponivel(quantidadeDisponivel)
-                .caracteristicas(caracteristicas)
-                .fotos(fotos)
+                .caracteristicas(caracteristicas.stream().map(CaracteristicaProdutoRequest::modelo).collect(Collectors.toList()))
                 .descricao(descricao)
                 .categoria(categoria)
                 .build();

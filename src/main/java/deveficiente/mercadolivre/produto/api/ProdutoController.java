@@ -21,8 +21,8 @@ public class ProdutoController {
     private final ProdutoRepository produtoRepository;
 
     @PostMapping
-    public ResponseEntity<ProdutoDTO> cadastrar(@RequestBody @Valid NovoProdutoRequest novoProduto) {
-        Produto produto = novoProduto.entidade(categoriaRepository);
+    public ResponseEntity<ProdutoDTO> cadastrar(@RequestBody @Valid ProdutoRequest novoProduto) {
+        Produto produto = novoProduto.modelo(categoriaRepository);
         produtoRepository.save(produto);
         return ResponseEntity.ok(ProdutoDTO.from(produto));
     }

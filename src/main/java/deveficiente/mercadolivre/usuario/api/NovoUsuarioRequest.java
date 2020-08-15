@@ -27,7 +27,7 @@ public class NovoUsuarioRequest {
     @NotNull
     private LocalDateTime criadoEm;
 
-    public Usuario entidade() {
+    public Usuario modelo() {
         return new Usuario(login, senha, criadoEm);
     }
 }

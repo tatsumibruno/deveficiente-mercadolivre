@@ -45,7 +45,6 @@ public class Produto {
     @CollectionTable(name = "produto_caracteristica", joinColumns = @JoinColumn(name = "produto_id"))
     private List<CaracteristicaProduto> caracteristicas = new ArrayList<>();
     @Valid
-    @NotEmpty
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "produto_foto", joinColumns = @JoinColumn(name = "produto_id"))
     private List<FotoProduto> fotos = new ArrayList<>();
@@ -60,6 +59,10 @@ public class Produto {
 
     public static ProdutoBuilder builder() {
         return new ProdutoBuilder();
+    }
+
+    public void adicionarFoto(@NonNull FotoProduto fotoProduto) {
+        this.fotos.add(fotoProduto);
     }
 
     public List<CaracteristicaProduto> getCaracteristicas() {
@@ -79,7 +82,6 @@ public class Produto {
         private BigDecimal valor;
         private int quantidadeDisponivel;
         private List<CaracteristicaProduto> caracteristicas = new ArrayList<>();
-        private List<FotoProduto> fotos = new ArrayList<>();
         private String descricao;
         private Categoria categoria;
 
@@ -106,11 +108,6 @@ public class Produto {
             return this;
         }
 
-        public ProdutoBuilder fotos(@NonNull List<FotoProduto> fotos) {
-            this.fotos = new ArrayList<>(fotos);
-            return this;
-        }
-
         public ProdutoBuilder descricao(@NonNull String descricao) {
             this.descricao = descricao;
             return this;
@@ -124,7 +121,6 @@ public class Produto {
         public Produto build() {
             Produto produto = new Produto();
             produto.valor = requireNonNull(this.valor);
-            produto.fotos = requireNonNull(this.fotos);
             produto.nome = requireNonNull(this.nome);
             produto.quantidadeDisponivel = this.quantidadeDisponivel;
             produto.caracteristicas = requireNonNull(this.caracteristicas);

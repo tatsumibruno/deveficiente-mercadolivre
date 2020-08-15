@@ -22,7 +22,7 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<CategoriaDTO> cadastrar(@RequestBody @Valid NovaCategoriaRequest novaCategoria) {
-        Categoria categoria = novaCategoria.entidade(categoriaRepository);
+        Categoria categoria = novaCategoria.modelo(categoriaRepository);
         categoriaRepository.save(categoria);
         return ResponseEntity.ok(CategoriaDTO.from(categoria));
     }
