@@ -1,7 +1,9 @@
 package deveficiente.mercadolivre.produto.dominio;
 
 import deveficiente.mercadolivre.categoria.dominio.Categoria;
+import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -11,9 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,11 +43,11 @@ public class Produto {
     @NotEmpty
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "produto_caracteristica", joinColumns = @JoinColumn(name = "produto_id"))
-    private List<CaracteristicaProduto> caracteristicas = new ArrayList<>();
+    private Set<CaracteristicaProduto> caracteristicas = new LinkedHashSet<>();
     @Valid
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "produto_foto", joinColumns = @JoinColumn(name = "produto_id"))
-    private List<FotoProduto> fotos = new ArrayList<>();
+    private Set<FotoProduto> fotos = new LinkedHashSet<>();
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
@@ -56,6 +56,11 @@ public class Produto {
     @NotNull
     @CreatedDate
     private LocalDateTime dataCriacao;
+    @NotNull
+    @CreatedBy
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendedor_id")
+    private Usuario vendedor;
 
     public static ProdutoBuilder builder() {
         return new ProdutoBuilder();
@@ -77,11 +82,15 @@ public class Produto {
         return categoria.getNome();
     }
 
+    public String getEmailVendedor() {
+        return vendedor.getUsername();
+    }
+
     public static final class ProdutoBuilder {
         private String nome;
         private BigDecimal valor;
         private int quantidadeDisponivel;
-        private List<CaracteristicaProduto> caracteristicas = new ArrayList<>();
+        private Set<CaracteristicaProduto> caracteristicas = new LinkedHashSet<>();
         private String descricao;
         private Categoria categoria;
 
@@ -103,8 +112,8 @@ public class Produto {
             return this;
         }
 
-        public ProdutoBuilder caracteristicas(@NonNull List<CaracteristicaProduto> caracteristicas) {
-            this.caracteristicas = new ArrayList<>(caracteristicas);
+        public ProdutoBuilder caracteristicas(@NonNull Set<CaracteristicaProduto> caracteristicas) {
+            this.caracteristicas = new LinkedHashSet<>(caracteristicas);
             return this;
         }
 

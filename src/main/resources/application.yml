@@ -23,6 +23,9 @@ server:
     enabled: true
 jwt:
   secret: mercadolivre
+sendgrid:
+  api-key: SENDGRID-KEY
+  from: SENDGRID-FROM
 aws:
   access-key: ACCESS-KEY
   secret-key: SECRET-KEY

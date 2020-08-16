@@ -45,7 +45,7 @@ public class ProdutoRequest {
                 .nome(nome)
                 .valor(valor)
                 .quantidadeDisponivel(quantidadeDisponivel)
-                .caracteristicas(caracteristicas.stream().map(CaracteristicaProdutoRequest::modelo).collect(Collectors.toList()))
+                .caracteristicas(caracteristicas.stream().map(CaracteristicaProdutoRequest::modelo).collect(Collectors.toSet()))
                 .descricao(descricao)
                 .categoria(categoria)
                 .build();
