@@ -31,10 +31,8 @@ public class MailService {
     public void enviar(@Valid @javax.validation.constraints.Email @NonNull String para,
                        @NonNull String assunto,
                        @NonNull String corpo) {
-        Email from = new Email(this.from);
-        Email to = new Email(para);
         Content content = new Content("text/plain", corpo);
-        Mail mail = new Mail(from, assunto, to, content);
+        Mail mail = new Mail(new Email(from), assunto, new Email(para), content);
 
         SendGrid sg = new SendGrid(apiKey);
         Request request = new Request();
