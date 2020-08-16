@@ -2,7 +2,9 @@ package deveficiente.mercadolivre.comentario.dominio;
 
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,6 +18,7 @@ import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Comentario {
 
     @Id
