@@ -9,15 +9,14 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class SecurityAuditorAware implements AuditorAware<String> {
+public class SecurityAuditorAware implements AuditorAware<Usuario> {
 
     @Override
-    public Optional<String> getCurrentAuditor() {
+    public Optional<Usuario> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Optional.ofNullable(authentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .map(Usuario.class::cast)
-                .map(Usuario::getUsername);
+                .map(Usuario.class::cast);
     }
 }

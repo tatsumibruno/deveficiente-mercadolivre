@@ -1,6 +1,7 @@
 package deveficiente.mercadolivre.comentario.dominio;
 
 import deveficiente.mercadolivre.produto.dominio.Produto;
+import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.data.annotation.CreatedBy;
@@ -37,10 +38,11 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id")
     private Produto produto;
-    @Getter
     @NotNull
     @CreatedBy
-    private String criadoPor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario criadoPor;
 
     public Comentario(@NonNull NotaProduto nota, @NonNull String titulo, @NonNull String descricao, @NonNull Produto produto) {
         this.nota = nota;
@@ -51,5 +53,9 @@ public class Comentario {
 
     public String getDescricaoProduto() {
         return produto.getDescricao();
+    }
+
+    public String getDescricaoUsuario() {
+        return criadoPor.getUsername();
     }
 }

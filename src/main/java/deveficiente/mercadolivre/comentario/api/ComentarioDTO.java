@@ -25,6 +25,6 @@ public class ComentarioDTO {
                 comentario.getTitulo(),
                 comentario.getDescricao(),
                 comentario.getDescricaoProduto(),
-                comentario.getCriadoPor());
+                comentario.getDescricaoUsuario());
     }
 }
