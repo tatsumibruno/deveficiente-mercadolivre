@@ -32,6 +32,7 @@ public class Compra {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id")
     private Produto produto;
+    @Getter
     @Positive
     private int quantidade;
     @NotNull
@@ -51,5 +52,23 @@ public class Compra {
         Assert.notNull(id, "Link de pagamento não pode ser gerado sem a compra existir");
         Assert.notNull(gatewayPagamento, "Link de pagamento não pode ser gerado sem o gateway ter sido informado");
         return gatewayPagamento.gerarLinkPagamento(id);
+    }
+
+    public void abaterEstoque() {
+        Assert.notNull(produto, "Produto não deveria estar nulo");
+        Assert.isTrue(quantidade > 0, "Quantidade deveria ser maior que 0");
+        produto.abaterEstoqueEm(quantidade);
+    }
+
+    public String getEmailUsuario() {
+        return usuario.getUsername();
+    }
+
+    public String getNomeProduto() {
+        return produto.getNome();
+    }
+
+    public String getEmailVendedor() {
+        return produto.getEmailVendedor();
     }
 }

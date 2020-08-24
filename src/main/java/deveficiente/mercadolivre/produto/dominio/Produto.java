@@ -1,11 +1,13 @@
 package deveficiente.mercadolivre.produto.dominio;
 
 import deveficiente.mercadolivre.categoria.dominio.Categoria;
+import deveficiente.mercadolivre.comum.exceptions.BusinessException;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -84,6 +86,13 @@ public class Produto {
 
     public String getEmailVendedor() {
         return vendedor.getUsername();
+    }
+
+    public void abaterEstoqueEm(int quantidade) {
+        if (quantidadeDisponivel < quantidade) {
+            throw BusinessException.of("produto.estoque.indisponivel");
+        }
+        this.quantidadeDisponivel -= quantidade;
     }
 
     public static final class ProdutoBuilder {
