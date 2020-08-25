@@ -3,7 +3,6 @@ package deveficiente.mercadolivre.pedido.dominio;
 import deveficiente.mercadolivre.comum.infra.mail.MailService;
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;

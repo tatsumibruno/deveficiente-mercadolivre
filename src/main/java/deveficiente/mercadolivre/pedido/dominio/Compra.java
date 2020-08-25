@@ -40,6 +40,9 @@ public class Compra {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusCompra status = StatusCompra.INICIADA;
 
     public Compra(@NonNull GatewayPagamento gatewayPagamento, @NonNull Produto produto, int quantidade) {
         Assert.isTrue(quantidade > 0, "Quantidade deve ser > 0");
