@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(ElementType.FIELD)
 @Retention(RUNTIME)
-@Constraint(validatedBy = UniqueValidator.class)
+@Constraint(validatedBy = IdExistsValidator.class)
 @Documented
 public @interface IdExists {
     String message() default "{registro.nao.existe}";

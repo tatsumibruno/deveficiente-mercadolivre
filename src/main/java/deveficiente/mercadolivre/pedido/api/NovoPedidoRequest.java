@@ -1,7 +1,7 @@
 package deveficiente.mercadolivre.pedido.api;
 
 import deveficiente.mercadolivre.pedido.dominio.GatewayPagamento;
-import deveficiente.mercadolivre.pedido.dominio.NovaCompra;
+import deveficiente.mercadolivre.pedido.dominio.comandos.NovaCompraCommand;
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import deveficiente.mercadolivre.produto.dominio.ProdutoRepository;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @ToString
 @NoArgsConstructor
-public class PedidoRequest {
+public class NovoPedidoRequest {
 
     @NotNull(message = "{gateway.deve.ser.informado}")
     private GatewayPagamento gatewayPagamento;
@@ -24,9 +24,9 @@ public class PedidoRequest {
     @Positive(message = "{quantidade.deve.ser.maior.um}")
     private int quantidade;
 
-    public NovaCompra comando(ProdutoRepository produtoRepository) {
+    public NovaCompraCommand comando(ProdutoRepository produtoRepository) {
         Produto produto = produtoRepository.findById(idProduto)
                 .orElseThrow(() -> new IllegalArgumentException("produto.nao.encontrado"));
-        return new NovaCompra(gatewayPagamento, produto, quantidade);
+        return new NovaCompraCommand(gatewayPagamento, produto, quantidade);
     }
 }

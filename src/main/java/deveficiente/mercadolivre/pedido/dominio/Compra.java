@@ -2,10 +2,7 @@ package deveficiente.mercadolivre.pedido.dominio;
 
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
@@ -13,12 +10,15 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @ToString
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Compra {
 
     @Id
@@ -43,6 +43,9 @@ public class Compra {
     @NotNull
     @Enumerated(EnumType.STRING)
     private StatusCompra status = StatusCompra.INICIADA;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compra",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TentativaPagamento> tentativasPagamentos = new LinkedHashSet<>();
 
     public Compra(@NonNull GatewayPagamento gatewayPagamento, @NonNull Produto produto, int quantidade) {
         Assert.isTrue(quantidade > 0, "Quantidade deve ser > 0");
@@ -73,5 +76,9 @@ public class Compra {
 
     public String getEmailVendedor() {
         return produto.getEmailVendedor();
+    }
+
+    public void addTentativaPagamento(StatusPagamento status) {
+        this.tentativasPagamentos.add(new TentativaPagamento(this, status));
     }
 }

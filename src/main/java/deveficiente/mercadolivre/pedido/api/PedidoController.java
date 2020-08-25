@@ -1,8 +1,9 @@
 package deveficiente.mercadolivre.pedido.api;
 
 import deveficiente.mercadolivre.pedido.dominio.Compra;
-import deveficiente.mercadolivre.pedido.dominio.NovaCompra;
-import deveficiente.mercadolivre.pedido.dominio.PedidoService;
+import deveficiente.mercadolivre.pedido.dominio.PagamentoService;
+import deveficiente.mercadolivre.pedido.dominio.comandos.NovaCompraCommand;
+import deveficiente.mercadolivre.pedido.dominio.NovoPedidoService;
 import deveficiente.mercadolivre.produto.dominio.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
@@ -24,14 +25,27 @@ import java.util.UUID;
 public class PedidoController {
 
     private final ProdutoRepository produtoRepository;
-    private final PedidoService pedidoService;
+    private final NovoPedidoService novoPedidoService;
+    private final PagamentoService pagamentoService;
 
     @PostMapping
-    public ResponseEntity<UUID> realizar(@Valid @RequestBody PedidoRequest request) {
-        NovaCompra novaCompra = request.comando(produtoRepository);
-        Compra compra = pedidoService.realizar(novaCompra);
+    public ResponseEntity<UUID> novoPedido(@Valid @RequestBody NovoPedidoRequest request) {
+        NovaCompraCommand novaCompra = request.comando(produtoRepository);
+        Compra compra = novoPedidoService.realizar(novaCompra);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, compra.linkPagamento())
                 .body(compra.getId());
+    }
+
+    @PostMapping(path = "/tentativa-pagamento/paypal")
+    public ResponseEntity<Void> pagamentoPaypal(@Valid @RequestBody PagamentoPaypalRequest pagamento) {
+        pagamentoService.processar(pagamento);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(path = "/tentativa-pagamento/pagseguro")
+    public ResponseEntity<Void> pagamentoPagseguro(@Valid @RequestBody PagamentoPagseguroRequest pagamento) {
+        pagamentoService.processar(pagamento);
+        return ResponseEntity.noContent().build();
     }
 }

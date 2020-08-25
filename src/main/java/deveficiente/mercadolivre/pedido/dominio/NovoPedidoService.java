@@ -1,6 +1,7 @@
 package deveficiente.mercadolivre.pedido.dominio;
 
 import deveficiente.mercadolivre.comum.infra.mail.MailService;
+import deveficiente.mercadolivre.pedido.dominio.comandos.NovaCompraCommand;
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,13 @@ import javax.validation.Valid;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class PedidoService {
+public class NovoPedidoService {
 
     private final CompraRepository compraRepository;
     private final MailService mailService;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Compra realizar(@Valid NovaCompra novaCompra) {
+    public Compra realizar(@Valid NovaCompraCommand novaCompra) {
         Produto produto = novaCompra.getProduto();
         Compra compra = new Compra(novaCompra.getGatewayPagamento(),
                 produto,
