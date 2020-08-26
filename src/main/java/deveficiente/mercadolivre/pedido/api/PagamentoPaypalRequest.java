@@ -1,8 +1,5 @@
 package deveficiente.mercadolivre.pedido.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import deveficiente.mercadolivre.comum.api.validators.IdExists;
-import deveficiente.mercadolivre.pedido.dominio.Compra;
 import deveficiente.mercadolivre.pedido.dominio.StatusPagamento;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Getter
 @ToString
 public class PagamentoPaypalRequest implements TentativaPagamentoRequest {
 
@@ -23,7 +21,6 @@ public class PagamentoPaypalRequest implements TentativaPagamentoRequest {
     @Max(1)
     private Integer status;
     @NotNull
-    @IdExists(targetClass = Compra.class, message = "{compra.nao.encontrada}")
     private UUID idCompra;
 
     @Override
@@ -37,7 +34,6 @@ public class PagamentoPaypalRequest implements TentativaPagamentoRequest {
     }
 
     @Override
-    @JsonIgnore
     public StatusPagamento getStatusPagamento() {
         return status == 1 ? StatusPagamento.SUCESSO : StatusPagamento.ERRO;
     }

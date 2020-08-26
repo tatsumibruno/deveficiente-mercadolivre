@@ -26,7 +26,6 @@ public class PedidoController {
 
     private final ProdutoRepository produtoRepository;
     private final NovoPedidoService novoPedidoService;
-    private final PagamentoService pagamentoService;
 
     @PostMapping
     public ResponseEntity<UUID> novoPedido(@Valid @RequestBody NovoPedidoRequest request) {
@@ -35,17 +34,5 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, compra.linkPagamento())
                 .body(compra.getId());
-    }
-
-    @PostMapping(path = "/tentativa-pagamento/paypal")
-    public ResponseEntity<Void> pagamentoPaypal(@Valid @RequestBody PagamentoPaypalRequest pagamento) {
-        pagamentoService.processar(pagamento);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping(path = "/tentativa-pagamento/pagseguro")
-    public ResponseEntity<Void> pagamentoPagseguro(@Valid @RequestBody PagamentoPagseguroRequest pagamento) {
-        pagamentoService.processar(pagamento);
-        return ResponseEntity.noContent().build();
     }
 }

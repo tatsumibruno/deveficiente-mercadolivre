@@ -1,5 +1,7 @@
 package deveficiente.mercadolivre.pedido.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import deveficiente.mercadolivre.pedido.dominio.Compra;
 import deveficiente.mercadolivre.pedido.dominio.CompraRepository;
 import deveficiente.mercadolivre.pedido.dominio.StatusPagamento;
 import deveficiente.mercadolivre.pedido.dominio.comandos.TentativaPagamentoCommand;
@@ -12,9 +14,12 @@ public interface TentativaPagamentoRequest {
 
     String getIdPagamento();
 
+    @JsonIgnore
     StatusPagamento getStatusPagamento();
 
     default TentativaPagamentoCommand comando(CompraRepository compraRepository) {
-        return null;
+        Compra compra = compraRepository.findById(getIdCompra())
+                .orElseThrow(() -> new IllegalArgumentException(("compra.nao.encontrada")));
+        return new TentativaPagamentoCommand(getIdPagamento(), compra, getStatusPagamento());
     }
 }

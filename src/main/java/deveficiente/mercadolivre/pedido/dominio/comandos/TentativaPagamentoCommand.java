@@ -1,25 +1,28 @@
 package deveficiente.mercadolivre.pedido.dominio.comandos;
 
 import deveficiente.mercadolivre.pedido.dominio.Compra;
+import deveficiente.mercadolivre.pedido.dominio.StatusCompra;
 import deveficiente.mercadolivre.pedido.dominio.StatusPagamento;
 import lombok.NonNull;
-import lombok.ToString;
+import lombok.Value;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@ToString
+@Value
 public class TentativaPagamentoCommand {
-    @NotEmpty
-    private final String idPagamento;
-    @NotNull
-    private final Compra compra;
-    @NotNull
-    private final StatusPagamento statusPagamento;
+    @NotEmpty String idPagamento;
+    @NotNull Compra compra;
+    @NotNull StatusPagamento statusPagamento;
 
     public TentativaPagamentoCommand(@NonNull String idPagamento, @NonNull Compra compra, @NonNull StatusPagamento statusPagamento) {
         this.idPagamento = idPagamento;
         this.compra = compra;
         this.statusPagamento = statusPagamento;
+    }
+
+    public void executar() {
+        compra.addTentativaPagamento(statusPagamento);
+        compra.setStatus(statusPagamento.toStatusCompra());
     }
 }

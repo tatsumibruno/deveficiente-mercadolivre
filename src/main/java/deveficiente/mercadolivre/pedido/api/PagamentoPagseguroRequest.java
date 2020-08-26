@@ -1,8 +1,8 @@
 package deveficiente.mercadolivre.pedido.api;
 
-import deveficiente.mercadolivre.comum.api.validators.IdExists;
 import deveficiente.mercadolivre.pedido.dominio.Compra;
 import deveficiente.mercadolivre.pedido.dominio.CompraRepository;
+import deveficiente.mercadolivre.pedido.dominio.StatusPagamento;
 import deveficiente.mercadolivre.pedido.dominio.comandos.TentativaPagamentoCommand;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,13 +20,29 @@ public class PagamentoPagseguroRequest implements TentativaPagamentoRequest {
     @NotNull
     private PagamentoPagseguroStatusRequest status;
     @NotNull
-    @IdExists(targetClass = Compra.class, message = "{compra.nao.encontrada}")
     private UUID idCompra;
+
+    @Override
+    public StatusPagamento getStatusPagamento() {
+        return status.getStatusCompra();
+    }
 
     @Override
     public TentativaPagamentoCommand comando(CompraRepository compraRepository) {
         Compra compra = compraRepository.findById(idCompra)
                 .orElseThrow(() -> new IllegalArgumentException("compra.nao.encontrada"));
         return new TentativaPagamentoCommand(idPagamento, compra, status.getStatusCompra());
+    }
+
+    private enum PagamentoPagseguroStatusRequest {
+        SUCESSO(StatusPagamento.SUCESSO),
+        ERRO(StatusPagamento.ERRO);
+
+        @Getter
+        private final StatusPagamento statusCompra;
+
+        PagamentoPagseguroStatusRequest(StatusPagamento statusCompra) {
+            this.statusCompra = statusCompra;
+        }
     }
 }

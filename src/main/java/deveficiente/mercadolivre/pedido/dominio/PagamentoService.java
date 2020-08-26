@@ -17,10 +17,8 @@ public class PagamentoService {
     private final CompraRepository compraRepository;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void processar(@Valid TentativaPagamentoCommand pagamento) {
-        Compra compra = compraRepository.findById(pagamento.getIdCompra())
-                .orElseThrow(() -> new IllegalArgumentException("compra.nao.encontrada"));
-        System.out.println(compra);
-        System.out.println(pagamento);
+    public void processar(@Valid TentativaPagamentoCommand tentativaPagamento) {
+        tentativaPagamento.executar();
+        System.out.println(tentativaPagamento);
     }
 }

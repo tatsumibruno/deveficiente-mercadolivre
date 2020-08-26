@@ -43,7 +43,7 @@ public class Compra {
     @NotNull
     @Enumerated(EnumType.STRING)
     private StatusCompra status = StatusCompra.INICIADA;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compra",
+    @OneToMany(mappedBy = "compra",
             cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TentativaPagamento> tentativasPagamentos = new LinkedHashSet<>();
 
@@ -78,7 +78,15 @@ public class Compra {
         return produto.getEmailVendedor();
     }
 
-    public void addTentativaPagamento(StatusPagamento status) {
-        this.tentativasPagamentos.add(new TentativaPagamento(this, status));
+    public void addTentativaPagamento(StatusPagamento statusPagamento) {
+        this.tentativasPagamentos.add(new TentativaPagamento(this, statusPagamento));
+    }
+
+    public boolean utilizaGateway(GatewayPagamento gatewayPagamento) {
+        return this.gatewayPagamento == gatewayPagamento;
+    }
+
+    public void setStatus(StatusCompra status) {
+        this.status = status;
     }
 }

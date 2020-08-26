@@ -9,10 +9,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter(AccessLevel.PRIVATE)
 public enum GatewayPagamento {
-    PAYPAL("https://paypal.com/%s?redirectUrl=" + GatewayPagamento.ENDPOINT_CONFIRMAR_PAGAMENTO),
-    PAGSEGURO("https://pagseguro.com?returnId=%s&redirectUrl=" + GatewayPagamento.ENDPOINT_CONFIRMAR_PAGAMENTO);
+    PAYPAL("https://paypal.com/%s?redirectUrl=http://localhost:8081/api/v1/pagamento/paypal"),
+    PAGSEGURO("https://pagseguro.com?returnId=%s&redirectUrl=http://localhost:8081/api/v1/pagamento/pagseguro");
 
-    private static final String ENDPOINT_CONFIRMAR_PAGAMENTO = "http://localhost:8081/api/v1/pedido/%s/pagamento";
     private final String link;
 
     public String gerarLinkPagamento(UUID id) {
