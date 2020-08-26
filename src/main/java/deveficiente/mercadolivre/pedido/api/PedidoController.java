@@ -1,9 +1,8 @@
 package deveficiente.mercadolivre.pedido.api;
 
 import deveficiente.mercadolivre.pedido.dominio.Compra;
-import deveficiente.mercadolivre.pedido.dominio.PagamentoService;
-import deveficiente.mercadolivre.pedido.dominio.comandos.NovaCompraCommand;
 import deveficiente.mercadolivre.pedido.dominio.NovoPedidoService;
+import deveficiente.mercadolivre.pedido.dominio.comandos.NovaCompraCommand;
 import deveficiente.mercadolivre.produto.dominio.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;

@@ -1,7 +1,6 @@
 package deveficiente.mercadolivre.pedido.dominio.comandos;
 
 import deveficiente.mercadolivre.pedido.dominio.Compra;
-import deveficiente.mercadolivre.pedido.dominio.StatusCompra;
 import deveficiente.mercadolivre.pedido.dominio.StatusPagamento;
 import lombok.NonNull;
 import lombok.Value;
