@@ -1,7 +1,8 @@
 package deveficiente.mercadolivre.pedido.api;
 
-import deveficiente.mercadolivre.pedido.api.validators.PagamentoPagseguroValidator;
-import deveficiente.mercadolivre.pedido.api.validators.PagamentoPaypalValidator;
+import deveficiente.mercadolivre.pedido.api.validators.PagamentoCompraSucessoValidator;
+import deveficiente.mercadolivre.pedido.api.validators.PagamentoComPagseguroValidator;
+import deveficiente.mercadolivre.pedido.api.validators.PagamentoComPaypalValidator;
 import deveficiente.mercadolivre.pedido.dominio.CompraRepository;
 import deveficiente.mercadolivre.pedido.dominio.PagamentoService;
 import deveficiente.mercadolivre.pedido.dominio.comandos.TentativaPagamentoCommand;
@@ -21,17 +22,18 @@ public class PagamentoController {
 
     private final PagamentoService pagamentoService;
     private final CompraRepository compraRepository;
-    private final PagamentoPagseguroValidator pagseguroValidator;
-    private final PagamentoPaypalValidator paypalValidator;
+    private final PagamentoComPagseguroValidator pagseguroValidator;
+    private final PagamentoComPaypalValidator paypalValidator;
+    private final PagamentoCompraSucessoValidator pagamentoCompraSucessoValidator;
 
     @InitBinder("pagamentoPaypalRequest")
     public void initBinderPaypal(WebDataBinder binder) {
-        binder.addValidators(paypalValidator);
+        binder.addValidators(paypalValidator, pagamentoCompraSucessoValidator);
     }
 
     @InitBinder("pagamentoPagseguroRequest")
     public void initBinderPagseguro(WebDataBinder binder) {
-        binder.addValidators(pagseguroValidator);
+        binder.addValidators(pagseguroValidator, pagamentoCompraSucessoValidator);
     }
 
     @PostMapping(path = "/paypal")

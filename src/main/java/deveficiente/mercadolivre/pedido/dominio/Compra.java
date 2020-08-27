@@ -1,5 +1,6 @@
 package deveficiente.mercadolivre.pedido.dominio;
 
+import deveficiente.mercadolivre.comum.exceptions.BusinessException;
 import deveficiente.mercadolivre.produto.dominio.Produto;
 import deveficiente.mercadolivre.usuario.dominio.Usuario;
 import lombok.*;
@@ -78,8 +79,8 @@ public class Compra {
         return produto.getEmailVendedor();
     }
 
-    public void addTentativaPagamento(StatusPagamento statusPagamento) {
-        this.tentativasPagamentos.add(new TentativaPagamento(this, statusPagamento));
+    public void addTentativaPagamento(String idGateway, StatusPagamento statusPagamento) {
+        this.tentativasPagamentos.add(new TentativaPagamento(this, idGateway, statusPagamento));
     }
 
     public boolean utilizaGateway(GatewayPagamento gatewayPagamento) {
@@ -87,6 +88,18 @@ public class Compra {
     }
 
     public void setStatus(StatusCompra status) {
+        if (isConcluida()) {
+            throw BusinessException.of("compra.concluida.nao.pode.alterar.status");
+        }
         this.status = status;
+    }
+
+    public boolean isConcluida() {
+        return status == StatusCompra.CONCLUIDA;
+    }
+
+    public boolean possuiIdPagamento(@NonNull String idPagamento) {
+        return tentativasPagamentos.stream()
+                .anyMatch(pagamento -> idPagamento.equals(pagamento.getIdGateway()));
     }
 }

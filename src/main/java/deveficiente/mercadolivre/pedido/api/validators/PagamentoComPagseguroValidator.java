@@ -1,24 +1,24 @@
 package deveficiente.mercadolivre.pedido.api.validators;
 
-import deveficiente.mercadolivre.pedido.api.PagamentoPaypalRequest;
+import deveficiente.mercadolivre.pedido.api.PagamentoPagseguroRequest;
 import deveficiente.mercadolivre.pedido.dominio.CompraRepository;
 import deveficiente.mercadolivre.pedido.dominio.GatewayPagamento;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PagamentoPaypalValidator extends GatewayPagamentoValidator {
+public class PagamentoComPagseguroValidator extends GatewayPagamentoValidator {
 
-    public PagamentoPaypalValidator(CompraRepository compraRepository) {
+    public PagamentoComPagseguroValidator(CompraRepository compraRepository) {
         super(compraRepository);
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.isAssignableFrom(PagamentoPaypalRequest.class);
+        return clazz.isAssignableFrom(PagamentoPagseguroRequest.class);
     }
 
     @Override
     protected GatewayPagamento gatewayPagamento() {
-        return GatewayPagamento.PAYPAL;
+        return GatewayPagamento.PAGSEGURO;
     }
 }
