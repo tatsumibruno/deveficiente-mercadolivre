@@ -11,6 +11,8 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -26,6 +28,7 @@ public class Compra {
     @Getter
     @GeneratedValue
     private UUID id;
+    @Getter
     @NotNull
     @Enumerated(EnumType.STRING)
     private GatewayPagamento gatewayPagamento;
@@ -101,5 +104,11 @@ public class Compra {
     public boolean possuiIdPagamento(@NonNull String idPagamento) {
         return tentativasPagamentos.stream()
                 .anyMatch(pagamento -> idPagamento.equals(pagamento.getIdGateway()));
+    }
+
+    public BigDecimal getValorTotal() {
+        return produto.getValor()
+                .multiply(BigDecimal.valueOf(quantidade))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 }
