@@ -32,15 +32,13 @@ public class NovoPedidoService {
     }
 
     private void notificar(Compra compra) {
-        String corpoEmail = """
-                Olá,
-                O cliente %s realizou a compra de %s unidades do Produto %s.
-                Para mais detalhes sobre a compra acesse: mercadolivre.com.br/pedidos/%s
-                """
-                .formatted(compra.getEmailUsuario(),
-                        compra.getQuantidade(),
-                        compra.getNomeProduto(),
-                        compra.getId().toString());
+        String corpoEmail = String.format("Olá,\n" +
+                        "O cliente %s realizou a compra de %s unidades do Produto %s.\n" +
+                        "Para mais detalhes sobre a compra acesse: mercadolivre.com.br/pedidos/%s",
+                compra.getEmailUsuario(),
+                compra.getQuantidade(),
+                compra.getNomeProduto(),
+                compra.getId().toString());
         mailService.enviar(compra.getEmailVendedor(), "Nova compra", corpoEmail);
     }
 }

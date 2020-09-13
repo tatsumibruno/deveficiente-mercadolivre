@@ -17,19 +17,17 @@ public class EnvioEmailCompraConcluida implements ProcessoPosPagamento {
 
     @Override
     public void processar(Compra compra) {
-        mailService.enviar(compra.getEmailUsuario(),
-                "Compra finalizada",
-                """
-                        Parabéns, seu pedido foi finalizado com sucesso.
-                        Detalhes:
-                        - Vendedor: %s
-                        - Produto: %s
-                        - Valor total: %s
-                        - Meio de pagamento: %s
-                        """
-                        .formatted(compra.getEmailVendedor(),
-                                compra.getNomeProduto(),
-                                compra.getValorTotal(),
-                                compra.getGatewayPagamento()));
+        String corpoEmail = String.format(new StringBuilder()
+                        .append("Parabéns, seu pedido foi finalizado com sucesso.\n")
+                        .append("Detalhes:\n")
+                        .append("- Vendedor: %s\n")
+                        .append("- Produto: %s\n")
+                        .append("- Valor total: %s\n")
+                        .append("- Meio de pagamento: %s")
+                        .toString(), compra.getEmailVendedor(),
+                compra.getNomeProduto(),
+                compra.getValorTotal(),
+                compra.getGatewayPagamento());
+        mailService.enviar(compra.getEmailUsuario(), "Compra finalizada", corpoEmail);
     }
 }
