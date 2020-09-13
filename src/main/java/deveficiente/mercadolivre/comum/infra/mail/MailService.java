@@ -36,6 +36,7 @@ public class MailService {
 
         SendGrid sg = new SendGrid(apiKey);
         Request request = null;//new Request();
+
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
